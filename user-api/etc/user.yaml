@@ -1,0 +1,10 @@
+Name: user
+Host: 0.0.0.0
+Port: 8888
+
+Postgres:
+  DSN: "host=127.0.0.1 user=postgres password=caojinbo dbname=looklook port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+  LogMode: false
+  MaxOpenCons: 10
+  MaxIdleCons: 10
+

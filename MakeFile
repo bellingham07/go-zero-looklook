@@ -1,0 +1,17 @@
+gen-api:
+	goctl api go -api ./user-api/desc/all.api -dir ./user-api
+
+gen-rpc:
+	goctl rpc protoc ./user-rpc/pb/user.proto --go_out=./user-rpc/pb --go-grpc_out=./user-rpc/pb --zrpc_out=./user-rpc.
+
+gen-docker:
+	goctl docker -go ./api/user.go
+
+gen-kube:
+	goctl kube deploy -name user-api -namespace go-zero-looklook -image user-api:v1.0 -o user-api.yaml -port 10010
+
+gen-model:
+	goctl model pg datasource \
+    -url="host=127.0.0.1  user=postgres password=caojinbo dbname=looklook port=5432 sslmode=disable TimeZone=Asia/Shanghai" \
+     -table="*" \
+     -dir="./user-api/internal/model"

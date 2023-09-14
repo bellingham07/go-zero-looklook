@@ -1,0 +1,43 @@
+syntax = "v2"
+
+type (
+    // 定义登录接口的请求体
+    LoginReq {
+        Id int64 `json:"id"`
+        Name string `json:"name"`
+    }
+        // 定义登录接口的响应体
+    LoginResp {
+        Id int64 `json:"id"`
+        Name string `json:"name"`
+        Time string `json:"time"`
+    }
+)
+
+@server(
+    group : user
+    prefix:userapi/v1
+)
+service user {
+    @handler UserTest
+    post /user/test (LoginReq) returns (LoginResp)
+}
+
+@server(
+    group: user
+    prefix:userapi/v1
+    middleware : TestMiddleware
+)
+    // 定义 HTTP 服务
+    // 微服务名称为 user，生成的代码目录和配置文件将和 user 值相关
+service user {
+    // 定义 http.HandleFunc 转换的 go 文件名称及方法
+    @handler Login
+    // 定义接口
+    // 请求方法为 post
+    // 路由为 /user/login
+    // 请求体为 LoginReq
+    // 响应体为 LoginResp，响应体必须有 returns 关键字修饰
+    post /user/login (LoginReq) returns (LoginResp)
+}
+
