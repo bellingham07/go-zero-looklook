@@ -1,0 +1,19 @@
+syntax = "v2"
+
+type (
+    BookReq {
+        Name string `json:"name"`
+    }
+    BookRepl {
+        Id string `json:"id"`
+    }
+)
+
+@server(
+    group : book
+    prefix :userapi/v1
+)
+service user {
+    @handler GetBook
+    post /get_book (BookReq) returns (BookRepl)
+}

@@ -2,8 +2,7 @@ package user
 
 import (
 	"context"
-	"fmt"
-
+	"github.com/pkg/errors"
 	"go-zero-looklook/user-api/internal/svc"
 	"go-zero-looklook/user-api/internal/types"
 
@@ -25,6 +24,21 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	fmt.Println("user login ing")
+	//logx.Error("nihaoa")
+	//resp.Id = 1
+	//if err = l.test1(); err != nil {
+	//	logx.Errorf("%+v \n", err)
+	//}
+	resp.Id = 0
 	return
+}
+
+func (l *LoginLogic) test1() error {
+	return l.test2()
+}
+func (l *LoginLogic) test2() error {
+	return l.test3()
+}
+func (l *LoginLogic) test3() error {
+	return errors.Wrap(errors.New("这是故意的"), "hahah")
 }

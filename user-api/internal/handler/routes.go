@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	book "go-zero-looklook/user-api/internal/handler/book"
 	user "go-zero-looklook/user-api/internal/handler/user"
 	"go-zero-looklook/user-api/internal/svc"
 
@@ -33,6 +34,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				},
 			}...,
 		),
+		rest.WithPrefix("/userapi/v1"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/get_book",
+				Handler: book.GetBookHandler(serverCtx),
+			},
+		},
 		rest.WithPrefix("/userapi/v1"),
 	)
 }

@@ -8,3 +8,8 @@ Postgres:
   MaxOpenCons: 10
   MaxIdleCons: 10
 
+Log:
+  ServiceName: user
+  Mode: console
+  Level: error
+  Encoding: plain

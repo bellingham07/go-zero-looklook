@@ -11,3 +11,11 @@ type LoginResp struct {
 	Name string `json:"name"`
 	Time string `json:"time"`
 }
+
+type BookReq struct {
+	Name string `json:"name"`
+}
+
+type BookRepl struct {
+	Id string `json:"id"`
+}
