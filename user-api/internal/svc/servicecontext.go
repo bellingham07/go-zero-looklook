@@ -3,8 +3,10 @@ package svc
 import (
 	"database/sql"
 	"github.com/zeromicro/go-zero/rest"
+	"github.com/zeromicro/go-zero/zrpc"
 	"go-zero-looklook/user-api/internal/config"
 	"go-zero-looklook/user-api/internal/middleware"
+	"go-zero-looklook/user-rpc/usercenter"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -16,6 +18,7 @@ import (
 type ServiceContext struct {
 	Config         config.Config
 	DB             *gorm.DB
+	UserRpcClient  usercenter.Usercenter
 	TestMiddleware rest.Middleware
 }
 
@@ -24,6 +27,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:         c,
 		DB:             db,
+		UserRpcClient:  usercenter.NewUsercenter(zrpc.MustNewClient(c.UserRpcConf)),
 		TestMiddleware: middleware.NewTestMiddleware().Handle,
 	}
 }

@@ -14,8 +14,16 @@ message GetUserInfoResp {
   string nickname = 2;
 }
 
+message UpdateUserInfoReq{
+  int64 id = 1;
+}
+message UpdateUserInfoResp{
+  string info = 2;
+}
 
 //service
 service usercenter {
-    rpc GetUserInfo(GetUserInfoReq) returns(GetUserInfoResp);
+  rpc GetUserInfo(GetUserInfoReq) returns(GetUserInfoResp);
+  rpc UpdateUserInfo(UpdateUserInfoReq) returns(UpdateUserInfoResp);
+  rpc DpdateUserInfo(UpdateUserInfoReq) returns(UpdateUserInfoResp);
 }

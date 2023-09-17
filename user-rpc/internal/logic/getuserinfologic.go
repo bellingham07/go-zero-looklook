@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 
 	"go-zero-looklook/user-rpc/internal/svc"
 	"go-zero-looklook/user-rpc/pb/pb"
@@ -24,7 +25,19 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 }
 
 func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoResp, error) {
-	// todo: add your logic here and delete this line
+	m := map[int64]string{
+		1: "zhangan",
+		2: "lisi",
+	}
 
-	return &pb.GetUserInfoResp{}, nil
+	fmt.Println(in.Id, "--------------------")
+
+	nickname := "unknown"
+	if name, ok := m[in.Id]; ok {
+		nickname = name
+	}
+	return &pb.GetUserInfoResp{
+		Id:       in.Id,
+		Nickname: nickname,
+	}, nil
 }

@@ -13,11 +13,15 @@ import (
 )
 
 type (
-	GetUserInfoReq  = pb.GetUserInfoReq
-	GetUserInfoResp = pb.GetUserInfoResp
+	GetUserInfoReq     = pb.GetUserInfoReq
+	GetUserInfoResp    = pb.GetUserInfoResp
+	UpdateUserInfoReq  = pb.UpdateUserInfoReq
+	UpdateUserInfoResp = pb.UpdateUserInfoResp
 
 	Usercenter interface {
 		GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error)
+		UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error)
+		DpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error)
 	}
 
 	defaultUsercenter struct {
@@ -34,4 +38,14 @@ func NewUsercenter(cli zrpc.Client) Usercenter {
 func (m *defaultUsercenter) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.GetUserInfo(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserInfo(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) DpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.DpdateUserInfo(ctx, in, opts...)
 }

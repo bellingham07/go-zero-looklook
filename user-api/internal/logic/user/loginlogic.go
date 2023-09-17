@@ -5,6 +5,8 @@ import (
 	"github.com/pkg/errors"
 	"go-zero-looklook/user-api/internal/svc"
 	"go-zero-looklook/user-api/internal/types"
+	"go-zero-looklook/user-rpc/pb/pb"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,13 +26,15 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	//logx.Error("nihaoa")
-	//resp.Id = 1
-	//if err = l.test1(); err != nil {
-	//	logx.Errorf("%+v \n", err)
-	//}
-	resp.Id = 0
-	return
+	userRpc, err := l.svcCtx.UserRpcClient.GetUserInfo(l.ctx, &pb.GetUserInfoReq{Id: req.Id})
+	if err != nil {
+		return nil, err
+	}
+	return &types.LoginResp{
+		Id:   userRpc.Id,
+		Name: userRpc.Nickname,
+		Time: time.Now().String(),
+	}, nil
 }
 
 func (l *LoginLogic) test1() error {
