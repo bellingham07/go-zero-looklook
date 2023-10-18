@@ -2,6 +2,9 @@ package book
 
 import (
 	"context"
+	"database/sql"
+	"go-zero-looklook/user-api/internal/model"
+	"time"
 
 	"go-zero-looklook/user-api/internal/svc"
 	"go-zero-looklook/user-api/internal/types"
@@ -24,7 +27,13 @@ func NewGetBookLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetBookLo
 }
 
 func (l *GetBookLogic) GetBook(req *types.BookReq) (resp *types.BookRepl, err error) {
-	// todo: add your logic here and delete this line
-	resp.Id = "0"
+	// 将时间戳转为时间
+	t := &model.Test{
+		Id:   1,
+		Name: sql.NullString{req.Name, true},
+		Time: sql.NullInt64{time.Now().Unix(), true},
+	}
+	// 存储到数据库
+	l.svcCtx.DB.Debug().Save(&t)
 	return
 }

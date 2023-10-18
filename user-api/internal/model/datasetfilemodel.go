@@ -1,6 +1,8 @@
 package model
 
-import "github.com/zeromicro/go-zero/core/stores/sqlx"
+import (
+	"gorm.io/gorm"
+)
 
 var _ DatasetFileModel = (*customDatasetFileModel)(nil)
 
@@ -9,16 +11,27 @@ type (
 	// and implement the added methods in customDatasetFileModel.
 	DatasetFileModel interface {
 		datasetFileModel
+		customDatasetFileLogicModel
 	}
 
 	customDatasetFileModel struct {
 		*defaultDatasetFileModel
 	}
+
+	customDatasetFileLogicModel interface {
+	}
 )
 
 // NewDatasetFileModel returns a model for the database table.
-func NewDatasetFileModel(conn sqlx.SqlConn) DatasetFileModel {
+func NewDatasetFileModel(conn *gorm.DB) DatasetFileModel {
 	return &customDatasetFileModel{
 		defaultDatasetFileModel: newDatasetFileModel(conn),
 	}
+}
+
+func (m *defaultDatasetFileModel) customCacheKeys(data *DatasetFile) []string {
+	if data == nil {
+		return []string{}
+	}
+	return []string{}
 }

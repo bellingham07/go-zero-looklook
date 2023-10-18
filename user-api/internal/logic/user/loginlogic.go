@@ -3,12 +3,9 @@ package user
 import (
 	"context"
 	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/core/logx"
 	"go-zero-looklook/user-api/internal/svc"
 	"go-zero-looklook/user-api/internal/types"
-	"go-zero-looklook/user-rpc/pb/pb"
-	"time"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type LoginLogic struct {
@@ -26,15 +23,12 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	userRpc, err := l.svcCtx.UserRpcClient.GetUserInfo(l.ctx, &pb.GetUserInfoReq{Id: req.Id})
+	err = l.svcCtx.LlmModel.UpdateLlm(l.ctx)
 	if err != nil {
 		return nil, err
 	}
-	return &types.LoginResp{
-		Id:   userRpc.Id,
-		Name: userRpc.Nickname,
-		Time: time.Now().String(),
-	}, nil
+
+	return nil, err
 }
 
 func (l *LoginLogic) test1() error {

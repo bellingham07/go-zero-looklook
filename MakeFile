@@ -14,4 +14,5 @@ gen-model:
 	goctl model pg datasource \
     -url="host=127.0.0.1  user=postgres password=caojinbo dbname=looklook port=5432 sslmode=disable TimeZone=Asia/Shanghai" \
      -table="*" \
-     -dir="./user-api/internal/model"
+     -dir="./user-api/internal/model"\
+	  -home="./template/gorm"

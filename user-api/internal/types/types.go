@@ -19,3 +19,38 @@ type BookReq struct {
 type BookRepl struct {
 	Id string `json:"id"`
 }
+
+type SonarWebhook struct {
+	ServerURL     string      `json:"serverUrl"`
+	TaskID        string      `json:"taskId"`
+	Status        string      `json:"status"`
+	AnalysedAt    string      `json:"analysedAt"`
+	Revision      string      `json:"revision"`
+	ProjectAAA    Project     `json:"projectAAA"`
+	PropertiesAAA Properties  `json:"propertiesAAA"`
+	QualityGates  QualityGate `json:"qualityGates"`
+}
+
+type Project struct {
+	Key  string `json:"key"`
+	Name string `json:"name"`
+	URL  string `json:"url"`
+}
+
+type Properties struct {
+}
+
+type Condition struct {
+	ErrorThreshold string `json:"errorThreshold"`
+	Metric         string `json:"metric"`
+	OnLeakPeriod   bool   `json:"onLeakPeriod"`
+	Operator       string `json:"operator"`
+	Status         string `json:"status"`
+	Value          string `json:"value,omitempty"`
+}
+
+type QualityGate struct {
+	Conditions []Condition `json:"conditions"`
+	Name       string      `json:"name"`
+	Status     string      `json:"status"`
+}

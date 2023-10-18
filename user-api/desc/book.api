@@ -7,6 +7,41 @@ type (
     BookRepl {
         Id string `json:"id"`
     }
+    SonarWebhook {
+        ServerURL string `json:"serverUrl"`
+        TaskID string `json:"taskId"`
+        Status string `json:"status"`
+        AnalysedAt string `json:"analysedAt"`
+        Revision string `json:"revision"`
+
+        ProjectAAA Project `json:"projectAAA"`
+
+        PropertiesAAA Properties `json:"propertiesAAA"`
+
+        QualityGates QualityGate `json:"qualityGates"`
+    }
+    Project {
+        Key string `json:"key"`
+        Name string `json:"name"`
+        URL string `json:"url"`
+    }
+    Properties {
+    }
+
+    Condition {
+        ErrorThreshold string `json:"errorThreshold"`
+        Metric string `json:"metric"`
+        OnLeakPeriod bool `json:"onLeakPeriod"`
+        Operator string `json:"operator"`
+        Status string `json:"status"`
+        Value string `json:"value,omitempty"`
+    }
+
+    QualityGate {
+        Conditions []Condition `json:"conditions"`
+        Name string `json:"name"`
+        Status string `json:"status"`
+    }
 )
 
 @server(

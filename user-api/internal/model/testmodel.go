@@ -1,6 +1,8 @@
 package model
 
-import "github.com/zeromicro/go-zero/core/stores/sqlx"
+import (
+	"gorm.io/gorm"
+)
 
 var _ TestModel = (*customTestModel)(nil)
 
@@ -9,16 +11,27 @@ type (
 	// and implement the added methods in customTestModel.
 	TestModel interface {
 		testModel
+		customTestLogicModel
 	}
 
 	customTestModel struct {
 		*defaultTestModel
 	}
+
+	customTestLogicModel interface {
+	}
 )
 
 // NewTestModel returns a model for the database table.
-func NewTestModel(conn sqlx.SqlConn) TestModel {
+func NewTestModel(conn *gorm.DB) TestModel {
 	return &customTestModel{
 		defaultTestModel: newTestModel(conn),
 	}
+}
+
+func (m *defaultTestModel) customCacheKeys(data *Test) []string {
+	if data == nil {
+		return []string{}
+	}
+	return []string{}
 }
